@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="userSQL">
+    <resultMap id="userResult" type="user.bean.UserDTO">
+        <result property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="pwd" column="pwd"/>
+    </resultMap>
+    <parameterMap id="userInput" type="user.bean.UserDTO">
+        <parameter property="id" javaType="String"/>
+        <parameter property="name" javaType="String"/>
+        <parameter property="pwd" javaType="String"/>
+    </parameterMap>
+<!--!!   Insert    -->
+    <insert id="insertUser" parameterMap="userInput">
+        INSERT INTO usertable (name, id, pwd)
+        VALUES (#{name}, #{id}, #{pwd})
+    </insert>
+
+<!--!!   Select    -->
+    <select id="selectAllUsers" resultMap="userResult">
+        SELECT * FROM usertable
+    </select>
+    <select id="selectUserById" parameterType="String" resultMap="userResult">
+        SELECT * FROM usertable
+        WHERE id = #{id}
+    </select>
+
+<!--!!   Update    -->
+    <update id="updateUser" parameterMap="userInput">
+        UPDATE usertable
+        SET name = #{name}, pwd = #{pwd}
+        WHERE id = #{id}
+    </update>
+
+<!--!!   Delete    -->
+    <delete id="deleteUser" parameterType="String">
+        DELETE FROM usertable
+        WHERE id = #{id}
+    </delete>
+</mapper>
