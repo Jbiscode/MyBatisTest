@@ -9,6 +9,7 @@ import user.bean.UserDTO;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
+import java.util.Map;
 
 public class UserDAO {
     private static UserDAO userDAO = new UserDAO();
@@ -44,6 +45,7 @@ public class UserDAO {
         session.close();
         return userDTO;
     }
+
     public UserDTO selectUserById(String id) {
         SqlSession session = sqlSessionFactory.openSession();
         UserDTO userDTO = session.selectOne("userSQL.selectUserById", id);
@@ -63,6 +65,14 @@ public class UserDAO {
         session.delete("userSQL.deleteUser", id);
         session.commit();
         session.close();
+    }
+
+    public List<UserDTO> search(Map<String, String> map) {
+        SqlSession session = sqlSessionFactory.openSession();
+
+        List<UserDTO> list = session.selectList("userSQL.selectUserByIDorNAME", map);
+        session.close();
+        return list;
     }
 
 

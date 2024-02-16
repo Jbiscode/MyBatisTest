@@ -8,13 +8,13 @@
         <result property="name" column="name"/>
         <result property="pwd" column="pwd"/>
     </resultMap>
-    <parameterMap id="userInput" type="user.bean.UserDTO">
-        <parameter property="id" javaType="String"/>
-        <parameter property="name" javaType="String"/>
-        <parameter property="pwd" javaType="String"/>
-    </parameterMap>
+<!--    <parameterMap id="userInput" type="user.bean.UserDTO">-->
+<!--        <parameter property="id" javaType="String"/>-->
+<!--        <parameter property="name" javaType="String"/>-->
+<!--        <parameter property="pwd" javaType="String"/>-->
+<!--    </parameterMap>-->
 <!--!!   Insert    -->
-    <insert id="insertUser" parameterMap="userInput">
+    <insert id="insertUser" parameterType="user">
         INSERT INTO usertable (name, id, pwd)
         VALUES (#{name}, #{id}, #{pwd})
     </insert>
@@ -27,9 +27,18 @@
         SELECT * FROM usertable
         WHERE id = #{id}
     </select>
+    <select id="selectUserByName" parameterType="String" resultMap="userResult">
+        SELECT * FROM usertable
+        WHERE name = #{name}
+    </select>
+    <select id="selectUserByIDorNAME" parameterType="Map" resultMap="userResult">
+        SELECT *
+        FROM usertable
+        WHERE ${colName} like concat('%', #{value}, '%')
+    </select>
 
 <!--!!   Update    -->
-    <update id="updateUser" parameterMap="userInput">
+    <update id="updateUser" parameterType="user">
         UPDATE usertable
         SET name = #{name}, pwd = #{pwd}
         WHERE id = #{id}

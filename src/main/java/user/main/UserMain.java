@@ -2,6 +2,7 @@ package user.main;
 
 import user.service.UserDeleteService;
 import user.service.UserInsertService;
+import user.service.UserSearchService;
 import user.service.UserSelectService;
 import user.service.UserService;
 import user.service.UserUpdateService;
@@ -33,7 +34,7 @@ public class UserMain {
                 case 2 -> userService = new UserSelectService();
                 case 3 -> userService = new UserUpdateService();
                 case 4 -> userService = new UserDeleteService();
-                case 5 -> System.out.println("검색을 선택하셨습니다.");
+                case 5 -> userService = new UserSearchService();
                 case 6 -> {
                     System.out.println("종료합니다.");
                     sc.close();
